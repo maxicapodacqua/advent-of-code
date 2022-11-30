@@ -59,7 +59,7 @@ func calculateRates(readings []int, bitsCount int) (gamma, epsilon []string) {
 }
 
 func main() {
-	f, err := os.Open("./03/input_csv.txt")
+	f, err := os.Open("./03/input_test.txt")
 	//f, err := os.Open("input_test.txt")
 	if err != nil {
 		panic(err)
@@ -85,7 +85,7 @@ func main() {
 	//fmt.Printf("rows %v\n", rows)
 	fmt.Printf("bit count %v\n", bitsCount)
 	//fmt.Printf("transpose %v\n", transposed)
-	//fmt.Printf("sum transposed %v\n", sumTransposed)
+	fmt.Printf("sum transposed %v\n", sumTransposed)
 	fmt.Printf("calculate rates %v %v\n", gamma, epsilon)
 	fmt.Printf("string bytes  gamma: %v epsilon: %v\n", strRateGamma, strRateEpsilon)
 	fmt.Printf("decimals  gamma: %v epsilon: %v\n", decimalGamma, decimalEpsilon)
