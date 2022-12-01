@@ -8,18 +8,9 @@ import (
 	"strconv"
 )
 
-//func findMax(slice []int, exclude []int) {
-//	max := 0
-//	for _, val := range slice {
-//		if val > max && val != sort.Ints() {
-//			max = val
-//		}
-//	}
-//}
-
 func main() {
 
-	f, err := os.Open("./2022/01/input_test.txt")
+	f, err := os.Open("./2022/01/input.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -28,24 +19,12 @@ func main() {
 	scanner.Split(bufio.ScanLines)
 
 	var calories []int
-	//topOne, topTwo, topThree := 0, 0, 0
 
 	accum := 0
 	for scanner.Scan() {
 		row := scanner.Text()
 
 		if row == "" {
-
-			//if accum > topOne {
-			//	topOne = accum
-			//}
-			//if accum < topOne && accum > topTwo {
-			//	topTwo = accum
-			//}
-			//if accum < topTwo && accum > topThree {
-			//	topThree = accum
-			//}
-
 			calories = append(calories, accum)
 			accum = 0
 			continue
@@ -62,15 +41,6 @@ func main() {
 
 	// the last line is excluded by this library
 	calories = append(calories, accum)
-	//if accum > topOne {
-	//	topOne = accum
-	//}
-	//if accum < topOne && accum > topTwo {
-	//	topTwo = accum
-	//}
-	//if accum < topTwo && accum > topThree {
-	//	topThree = accum
-	//}
 
 	fmt.Printf("calories: %v\n", calories)
 	sort.Ints(calories)
@@ -83,13 +53,4 @@ func main() {
 	}
 
 	fmt.Printf("Total of top three: %v\n", total)
-
-	//topOne, topTwo, topThree := 0
-	//for _, c := range calories {
-	//	if c > topOne, topTwo, topThree {
-	//		topOne, topTwo, topThree = c
-	//	}
-	//}
-
-	//fmt.Printf("inventory: %v", inventory)
 }
