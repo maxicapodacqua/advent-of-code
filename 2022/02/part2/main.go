@@ -18,15 +18,6 @@ var outcomeMap = map[string]int{
 	"Z": 6, //win
 }
 
-var stdShapes = map[string]string{
-	"A": "R", // rock
-	"B": "P", // paper
-	"C": "S", // scissors
-	"X": "R",
-	"Y": "P",
-	"Z": "S",
-}
-
 var winningMap = map[string]string{
 	"A": "B", // rock < paper
 	"B": "C", // paper < scissors
@@ -61,12 +52,9 @@ func guessShape(theirs, ours string) int {
 }
 
 func calculateScore(game []string) int {
-	//score := 0
-
 	theirs, ours := game[0], game[1]
 	outcomeRound := outcomeMap[ours]
 	ourScore := guessShape(theirs, ours)
-	//outcomeRound := calculateOutcome(theirs, ours)
 
 	fmt.Printf("calculate score, game: %v ourScore: %v, outcome: %v\n", game, ourScore, outcomeRound)
 
@@ -74,7 +62,6 @@ func calculateScore(game []string) int {
 }
 func main() {
 	f, err := os.Open("./2022/02/input.txt")
-	//f, err := os.Open("input_test.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -95,8 +82,6 @@ func main() {
 		score := calculateScore(game)
 		scores = append(scores, score)
 		acc += score
-		//fmt.Printf("%v\n", game)
-		//scores[i] = 11
 	}
 
 	fmt.Printf("scores: %v\n", scores)

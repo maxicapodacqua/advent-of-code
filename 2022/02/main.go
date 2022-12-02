@@ -50,22 +50,16 @@ func calculateOutcome(theirs, ours string) int {
 
 }
 func calculateScore(game []string) int {
-	//score := 0
-
 	theirs, ours := game[0], game[1]
 	ourScore := shapeScore[ours]
 	outcomeRound := calculateOutcome(theirs, ours)
 
 	fmt.Printf("calculate score, game: %v ourScore: %v, outcome: %v\n", game, ourScore, outcomeRound)
-	//if theirs == ours { // draw
-	//	outcomeRound = 0
-	//}
 
 	return ourScore + outcomeRound
 }
 func main() {
 	f, err := os.Open("./2022/02/input.txt")
-	//f, err := os.Open("input_test.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -86,8 +80,6 @@ func main() {
 		score := calculateScore(game)
 		scores = append(scores, score)
 		acc += score
-		//fmt.Printf("%v\n", game)
-		//scores[i] = 11
 	}
 
 	fmt.Printf("scores: %v\n", scores)
