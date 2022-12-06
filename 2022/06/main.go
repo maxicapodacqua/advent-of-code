@@ -8,23 +8,23 @@ import (
 	"strings"
 )
 
-func hasMarker(part []string) bool {
+func hasMarker(part []string, charCount int) bool {
 	aux := make([]string, len(part))
 	copy(aux, part)
 	slices.Sort(aux)
 	compacted := slices.Compact(aux)
 
-	return len(compacted) == 4
+	return len(compacted) == charCount
 }
 
-func findMarkerIndex(signal string) int {
+func findMarkerIndex(signal string, charCount int) int {
 
 	signalArr := strings.Split(signal, "")
 
-	for i := 0; i <= len(signalArr)-4; i++ {
-		tail := i + 4
+	for i := 0; i <= len(signalArr)-charCount; i++ {
+		tail := i + charCount
 		auxArr := signalArr[i:tail]
-		isMarker := hasMarker(auxArr)
+		isMarker := hasMarker(auxArr, charCount)
 		fmt.Printf("part: %v hasMarker: %v tail: %v\n", auxArr, isMarker, tail)
 		if isMarker {
 			return tail
@@ -48,8 +48,10 @@ func main() {
 	scanner.Scan()
 	signal := scanner.Text()
 
-	res := findMarkerIndex(signal)
+	res := findMarkerIndex(signal, 4) // part 1
+	fmt.Printf("Result part 1: %v", res)
 
-	fmt.Printf("Result: %v", res)
+	res = findMarkerIndex(signal, 14) // part 2
+	fmt.Printf("Result part 2: %v", res)
 
 }
