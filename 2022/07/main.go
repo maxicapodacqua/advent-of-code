@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -20,10 +19,31 @@ type File struct {
 	Size int
 }
 
-func PrintJSON(obj interface{}) {
-	bytes, err := json.MarshalIndent(obj, "  ", "  ")
-	panic(err)
-	fmt.Println(string(bytes))
+func (d Dir) Size() int {
+	acc := 0
+	for _, dir := range d.Dirs {
+		// here is the recursion
+		acc += dir.Size()
+	}
+	for _, file := range d.Files {
+		acc += file.Size
+	}
+	return acc
+}
+
+func (d Dir) Part1() int {
+
+	acc := 0
+	size := d.Size()
+	if size <= 100000 {
+		acc += size
+	}
+
+	for _, dir := range d.Dirs {
+		acc += dir.Part1()
+	}
+
+	return acc
 }
 
 func strToInt(s string) int {
@@ -36,7 +56,7 @@ func strToInt(s string) int {
 
 func main() {
 
-	f, err := os.Open("./2022/07/input_test.txt")
+	f, err := os.Open("./2022/07/input.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -47,7 +67,6 @@ func main() {
 	root := Dir{Name: "/"}
 
 	pointer := &root
-	//root.Parent = pointer
 
 	for scanner.Scan() {
 		cmd := scanner.Text()
@@ -94,7 +113,10 @@ func main() {
 	}
 
 	fmt.Println("Printing struct")
-	fmt.Printf("%+v", root)
+	fmt.Printf("%+v\n", root)
+	fmt.Printf("Full size (size of root): %+v\n", root.Size())
+	fmt.Printf("Part 1: %+v\n", root.Part1())
+
 	//PrintJSON(root)
 
 	//root := Dir{
