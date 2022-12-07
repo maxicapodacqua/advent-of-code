@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"golang.org/x/exp/slices"
 	"os"
 	"strconv"
 	"strings"
@@ -115,4 +116,37 @@ func main() {
 	fmt.Printf("%+v\n", root)
 	fmt.Printf("Full size (size of root): %+v\n", root.Size())
 	fmt.Printf("Part 1: %+v\n", root.Part1())
+
+	fmt.Println("##### PART 2 ######")
+
+	// total space is 70000000
+	// needs 30000000
+	// unused space = total space - root size
+	// needed space = 30000000 - unused space
+
+	totalSpace := 70000000
+	unusedSpace := totalSpace - root.Size()
+	neededSpace := 30000000 - unusedSpace
+
+	fmt.Printf("Needed space:%v\n", neededSpace)
+
+	// find directories with size >= neededSpace and then find the smallest
+	var res []int
+	part2(root, neededSpace, &res)
+
+	slices.Sort(res)
+	fmt.Printf("Sizes we can delete:%v\n -->Result: %v", res, res[0])
+
+}
+
+func part2(root Dir, neededSpace int, res *[]int) {
+	dirSize := root.Size()
+	if dirSize >= neededSpace {
+		*res = append(*res, dirSize)
+	}
+	if len(root.Dirs) > 0 {
+		for _, dir := range root.Dirs {
+			part2(dir, neededSpace, res)
+		}
+	}
 }
