@@ -76,7 +76,6 @@ func main() {
 			//parentPointer = pointer
 			if strings.HasPrefix(cmd, "$ cd ") {
 				moveToDir := strings.TrimPrefix(cmd, "$ cd ")
-				//fmt.Printf(" # moveToDir: %v parent %v", moveToDir, pointer.Parent.Name)
 				if moveToDir == ".." {
 					pointer = pointer.Parent
 				} else {
@@ -116,31 +115,4 @@ func main() {
 	fmt.Printf("%+v\n", root)
 	fmt.Printf("Full size (size of root): %+v\n", root.Size())
 	fmt.Printf("Part 1: %+v\n", root.Part1())
-
-	//PrintJSON(root)
-
-	//root := Dir{
-	//	Name: "/",
-	//	Files: []File{
-	//		{
-	//			Name: "b.txt",
-	//			Size: 14848514,
-	//		},
-	//		{
-	//			Name: "c.dat",
-	//			Size: 8504156,
-	//		},
-	//	},
-	//	Dirs: []Dir{
-	//		{
-	//			Name:  "d",
-	//			Files: nil,
-	//			Dirs:  nil,
-	//		},
-	//	},
-	//}
-	//
-	//PrintJSON(root)
-	//fmt.Printf("%+v", PrintJSON)
-
 }
