@@ -32,7 +32,6 @@ fn part2(input: &str) -> String {
             .chain(seven)
             .chain(eight)
             .chain(nine)
-            .into_iter()
             .collect();
         chained.sort();
 
