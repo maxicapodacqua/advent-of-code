@@ -1,3 +1,6 @@
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
 pub fn process(input: &str) -> String {
     let lines = input.lines();
     let mut acc = 0;
