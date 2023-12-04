@@ -1,3 +1,6 @@
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen(js_name = processPart2)]
 pub fn process(input: &str) -> String {
     let mut acc = 0;
 
