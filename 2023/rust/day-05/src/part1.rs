@@ -3,12 +3,23 @@ use std::{collections::HashMap, str::FromStr};
 #[derive(Debug)]
 struct PlantSource {
     // destination, source
-    map: HashMap<usize, usize>,
+    // map: HashMap<usize, usize>,
+    modifiers: Vec<(usize, usize, usize)>,
 }
 impl PlantSource {
     fn get_source(&self, destination: usize) -> usize {
-        let res = self.map.get(&destination).unwrap_or(&destination);
-        *res
+        for mods in self.modifiers.iter() {
+            let (dest_range, source_range, range_len) = mods;
+            let range = source_range..&(source_range + range_len);
+
+            if range.contains(&&destination) {
+                // dbg!((destination - source_range) + dest_range);
+                return (destination - source_range) + dest_range;
+            }
+        }
+        destination
+        // let res = self.map.get(&destination).unwrap_or(&destination);
+        // *res
     }
 }
 #[derive(Debug, PartialEq, Eq)]
@@ -21,7 +32,8 @@ impl FromStr for PlantSource {
         // Skip text from top
         let lines = s.lines().skip(1).collect::<Vec<_>>();
 
-        let mut map = HashMap::new();
+        // let mut map = HashMap::new();
+        let mut modifiers: Vec<_> = Vec::new();
 
         for l in lines.iter() {
             let row = l
@@ -36,13 +48,14 @@ impl FromStr for PlantSource {
             let destination_range = row[0];
             let source_range = row[1];
             let range_length = row[2];
+            modifiers.push((destination_range, source_range, range_length));
 
-            for i in 0..range_length {
-                map.insert(source_range + i, destination_range + i);
-            }
+            // for i in 0..range_length {
+            //     map.insert(source_range + i, destination_range + i);
+            // }
         }
 
-        Ok(PlantSource { map })
+        Ok(PlantSource { modifiers })
     }
 }
 
@@ -100,9 +113,10 @@ mod tests {
 
     #[test]
     fn plant_get_source_works() {
-        let mut t = HashMap::new();
-        t.insert(53, 55);
-        let soil = PlantSource { map: t };
+        let mut mods = Vec::new();
+        mods.push((50, 98, 2));
+        mods.push((52, 50, 48));
+        let soil = PlantSource { modifiers: mods };
         assert_eq!(soil.get_source(53), 55);
         assert_eq!(soil.get_source(2), 2);
     }
