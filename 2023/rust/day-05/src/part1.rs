@@ -1,9 +1,8 @@
-use std::{collections::HashMap, str::FromStr};
+use std::str::FromStr;
 
 #[derive(Debug)]
 struct PlantSource {
-    // destination, source
-    // map: HashMap<usize, usize>,
+    // destination range, source range, range len
     modifiers: Vec<(usize, usize, usize)>,
 }
 impl PlantSource {
@@ -13,13 +12,10 @@ impl PlantSource {
             let range = source_range..&(source_range + range_len);
 
             if range.contains(&&destination) {
-                // dbg!((destination - source_range) + dest_range);
                 return (destination - source_range) + dest_range;
             }
         }
         destination
-        // let res = self.map.get(&destination).unwrap_or(&destination);
-        // *res
     }
 }
 #[derive(Debug, PartialEq, Eq)]
@@ -49,10 +45,6 @@ impl FromStr for PlantSource {
             let source_range = row[1];
             let range_length = row[2];
             modifiers.push((destination_range, source_range, range_length));
-
-            // for i in 0..range_length {
-            //     map.insert(source_range + i, destination_range + i);
-            // }
         }
 
         Ok(PlantSource { modifiers })
@@ -96,7 +88,6 @@ pub fn process(input: &str) -> String {
 }
 
 mod tests {
-    use std::collections::HashMap;
 
     use crate::part1::{process, PlantSource};
 
