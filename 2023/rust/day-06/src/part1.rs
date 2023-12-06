@@ -16,7 +16,6 @@ pub fn process(input: &str) -> String {
 
     let mut out = 1;
     for i in 0..times.len() {
-        let a = 1.0;
         let b = times[i];
         let c = distances[i];
 
@@ -31,11 +30,7 @@ pub fn process(input: &str) -> String {
         } else {
             result += 1;
         }
-        dbg!(&result);
         out *= result;
-        // dbg!(quadratic_res_top.floor() - quadratic_res_bottom.ceil() + 1.0);
-
-        // result *= quadratic_res_top.floor() - quadratic_res_bottom.ceil() + 1.0;
     }
 
     out.to_string()
