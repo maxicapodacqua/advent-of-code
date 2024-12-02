@@ -42,6 +42,7 @@ defmodule Aoc2024.Day01 do
       Enum.map(lines, fn [_, a] -> a end)
       |> Enum.map(&String.to_integer(&1))
 
+    # Enum.frequencies does this exact thing :()
     mapFreq =
       Enum.reduce(right, %{}, fn element, acc ->
         case Map.get(acc, element) do
@@ -55,14 +56,15 @@ defmodule Aoc2024.Day01 do
       end)
 
     Enum.map(left, fn element ->
-      freq = case Map.get(mapFreq, element) do
-        nil -> 0
-        x -> x
-      end
-      element * freq
-     end)
-     |> Enum.reduce(fn x,acc -> x+acc end)
+      freq =
+        case Map.get(mapFreq, element) do
+          nil -> 0
+          x -> x
+        end
 
+      element * freq
+    end)
+    |> Enum.reduce(fn x, acc -> x + acc end)
   end
 
   def runPart1 do
@@ -70,6 +72,7 @@ defmodule Aoc2024.Day01 do
     # content |> IO.inspect()
     part1(content)
   end
+
   def runPart2 do
     {:ok, content} = File.read("#{__DIR__}/input_day01.txt")
     # content |> IO.inspect()
