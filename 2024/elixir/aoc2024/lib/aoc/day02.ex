@@ -22,8 +22,7 @@ defmodule Aoc2024.Day02 do
     |> String.split("\n")
     |> Enum.map(fn x ->
       # this can be simplyfied
-      levels = x |> String.split(" ") |> Enum.map(&String.to_integer/1)
-      levels
+      x |> String.split(" ") |> Enum.map(&String.to_integer/1)
     end)
     |> Enum.filter(&is_almost_safe?/1)
     |> length()
@@ -37,17 +36,24 @@ defmodule Aoc2024.Day02 do
     Enum.any?(permutations, &is_safe?/1)
   end
 
+  # If next element is higher than head, then expect whole list to be in asc order
   def is_safe?([h, n | _] = list) when h < n, do: is_safe?(:asc, list)
+  # if head is higher than next, then whole list should be in desc order
   def is_safe?([h, n | _] = list) when h > n, do: is_safe?(:desc, list)
+  # if head and next are equal, then it's not valid
   def is_safe?([h, n | _]) when h == n, do: false
 
+  # check list continues being asc order and distance between values is "at least one and at most three"
   def is_safe?(:asc, [h, n | rest]) when abs(h - n) in 1..3 and h < n,
     do: is_safe?(:asc, [n | rest])
 
+  # check list continues being desc order and distance between values is "at least one and at most three"
   def is_safe?(:desc, [h, n | rest]) when abs(h - n) in 1..3 and h > n,
     do: is_safe?(:desc, [n | rest])
 
+  # If finished iterating the list (exhausted all elements until empty list) , then the list is valid
   def is_safe?(_, [_last]), do: true
+  # otherwise is not valid
   def is_safe?(_, _), do: false
 
   def runPart1 do
