@@ -43,10 +43,32 @@ R50`
 		t.Errorf("Expected %d, got %d", expected, got)
 	}
 }
+func TestPart2_L50L50(t *testing.T) {
+	sample := `L50
+L50`
+	scanner := bufio.NewScanner(strings.NewReader(sample))
+	got := Part2(50, scanner)
+	expected := 1
+	if got != expected {
+		t.Errorf("Expected %d, got %d", expected, got)
+	}
+}
+
 func TestPart2_R200(t *testing.T) {
-	sample := `R200`
+	sample := `R200
+L1`
 	scanner := bufio.NewScanner(strings.NewReader(sample))
 	got := Part2(0, scanner)
+	expected := 2
+	if got != expected {
+		t.Errorf("Expected %d, got %d", expected, got)
+	}
+}
+func TestPart2_Playground(t *testing.T) {
+	sample := `L75
+R50`
+	scanner := bufio.NewScanner(strings.NewReader(sample))
+	got := Part2(50, scanner)
 	expected := 2
 	if got != expected {
 		t.Errorf("Expected %d, got %d", expected, got)

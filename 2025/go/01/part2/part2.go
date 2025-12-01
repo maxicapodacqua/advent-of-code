@@ -2,16 +2,10 @@ package part2
 
 import (
 	"bufio"
-	"fmt"
-	"math"
 	"strconv"
 )
 
 const MAX = 100
-
-func nextStep(init, motion int) int {
-	return (MAX + init + motion) % MAX
-}
 
 func strToInt(input string) int {
 	res, err := strconv.Atoi(input)
@@ -21,48 +15,31 @@ func strToInt(input string) int {
 	return res
 }
 
-func calcMotion(rotation string, distance int) int {
-	if rotation == "L" {
-		return -distance
-	}
-	return distance
-}
-
-func calcPassedZero(init, motion int) int {
-	spin := init + motion
-	fmt.Printf(" init=%v, motion=%v, Spin=%v\n", init, motion, spin)
-	// if spin == 0 {
-	// 	return 1
-	// }
-	div := float64(spin)/float64(MAX)
-	floor := int(math.Floor(div))
-	abs := max(floor, -floor)
-	fmt.Printf(" div=%v, floor=%v, abs=%v\n", div, floor, abs)
-	return abs
-}
 
 func Part2(start int, scanner *bufio.Scanner) int {
 	acc := 0
 	for scanner.Scan() {
 		row := scanner.Text()
-		rotation,distance := row[0:1], row[1:]
-		motion := calcMotion(rotation, strToInt(distance))
+		rotation,distance := row[0:1], strToInt(row[1:])
+		// A more brute force approach
+		var step int
+		if rotation == "L" {
+			step = -1
+		} else {
+			step =1
+		}
 
-		fmt.Printf("START: %v \n rotation=%v, distance=%v, motion=%v\n",start, rotation, distance, motion)
+		// Literally crank the dial by the distance
+		for range distance {
+			start = (start + step) % MAX
+			// And if we step on a 0, count it
+			if start == 0 {
+				acc++
+			}
+		}
 
-		passedZero := calcPassedZero(start,motion)
-
-		fmt.Printf(" Passed Zero=%v\n", passedZero)
-
-		acc += passedZero
-
-
-		start = nextStep(start, motion)
-
-		fmt.Printf(" Acc= %v, Move to= %v\n", acc, start)
-		// if start == 0 {
-		// 	acc++
-		// }
+		// fmt.Printf("\n%v\nStart: %v", row, start)
+		// fmt.Printf(" Acc= %v, Move to= %v\n", acc, start)
 	}
 
 	return acc

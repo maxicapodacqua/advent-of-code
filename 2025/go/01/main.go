@@ -3,8 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 
+	"github.com/maxicapodacqua/advent-of-code/2025/01/part1"
 	"github.com/maxicapodacqua/advent-of-code/2025/01/part2"
 )
 
@@ -15,15 +17,15 @@ func main() {
 		panic(err)
 	}
 	defer f.Close()
-	// scanner := bufio.NewScanner(f)
-	// res1 := part1.Part1(scanner)
-	// fmt.Printf("Part 1 -> %v\n", res1)
+	scanner := bufio.NewScanner(f)
+	res1 := part1.Part1(scanner)
+	fmt.Printf("Part 1 -> %v\n", res1)
 
 	// Reset file pointer to read again in new scanner
-	// _, err = f.Seek(0, io.SeekStart)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	_, err = f.Seek(0, io.SeekStart)
+	if err != nil {
+		panic(err)
+	}
 
 	res2 := part2.Part2(50, bufio.NewScanner(f))
 	fmt.Printf("Part 2 -> %v\n", res2)
