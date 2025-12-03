@@ -2,34 +2,12 @@ package part2
 
 import (
 	"bufio"
-	"fmt"
-	"slices"
 	"strconv"
 	"strings"
 
 	"github.com/maxicapodacqua/advent-of-code/2025/02/part1"
 )
 
-func areSplitsEqual(splits []string) bool {
-	fmt.Printf("areSplitsEqual=%v\n", splits)
-	filteredSplits := slices.DeleteFunc(splits, func(s string) bool {
-		return s == ""
-	})
-	if len(filteredSplits) <= 1 {
-		return false
-	}
-	for i := 0; i < len(filteredSplits)-1; i++ {
-		a, b := filteredSplits[i], filteredSplits[i+1]
-		fmt.Printf("areSplitsEqual a=%v, b=%v\n", a, b)
-		if a == "" || b == "" {
-			return false
-		}
-		if a != b {
-			return false
-		}
-	}
-	return true
-}
 
 func canConsumeProjectID(part, projectID string) bool {
 	if part == "" {
