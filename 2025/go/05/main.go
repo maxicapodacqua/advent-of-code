@@ -3,9 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/maxicapodacqua/advent-of-code/2025/05/part1"
+	"github.com/maxicapodacqua/advent-of-code/2025/05/part2"
 )
 
 func main() {
@@ -20,11 +22,11 @@ func main() {
 	fmt.Printf("Part 1 -> %v\n", res1)
 
 	// Reset file pointer to read again in new scanner
-	// _, err = f.Seek(0, io.SeekStart)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	_, err = f.Seek(0, io.SeekStart)
+	if err != nil {
+		panic(err)
+	}
 
-	// res2 := part2.Part2(bufio.NewScanner(f))
-	// fmt.Printf("Part 2 -> %v\n", res2)
+	res2 := part2.Part2(bufio.NewScanner(f))
+	fmt.Printf("Part 2 -> %v\n", res2)
 }
